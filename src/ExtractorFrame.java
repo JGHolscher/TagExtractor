@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
@@ -25,7 +26,7 @@ public class ExtractorFrame extends JFrame {
 
     public ExtractorFrame() //DONE
     {
-        setTitle("Tag Extractor");
+        setTitle("KeyWord Extractor");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Toolkit kit = Toolkit.getDefaultToolkit();
@@ -63,9 +64,9 @@ public class ExtractorFrame extends JFrame {
     {
         displayWordsPnl = new JPanel();
 
-        displayWordsTA = new JTextArea(20, 30);
+        displayWordsTA = new JTextArea(30, 40);
         scroller = new JScrollPane(displayWordsTA);
-        displayWordsTA.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+        displayWordsTA.setFont(new Font("Monospaced", Font.PLAIN, 20));
 
         displayWordsTA.setEditable(false);
         displayWordsPnl.add(scroller);
@@ -79,11 +80,11 @@ public class ExtractorFrame extends JFrame {
         btnPnl.setLayout(new GridLayout(1, 2));
 
         chooseBtn = new JButton("Choose File");
-        chooseBtn.setFont(new Font("Comic Sans MS", Font.PLAIN, 48));
+        chooseBtn.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
         quitBtn = new JButton("Quit");
-        quitBtn.setFont(new Font("Comic Sans MS", Font.PLAIN, 48));
-        saveBtn = new JButton("Save Tags to File");
-        saveBtn.setFont(new Font("Comic Sans MS", Font.PLAIN, 48));
+        quitBtn.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
+        saveBtn = new JButton("Save Keywords to File");
+        saveBtn.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
 
         btnPnl.add(chooseBtn);
         btnPnl.add(saveBtn);
@@ -110,7 +111,14 @@ public class ExtractorFrame extends JFrame {
         chooseBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                readStopWordFile();
+                readStoryFile();
+
+                for (Map.Entry m : keyWords.entrySet()) {
+
+                    displayWordsTA.append(String.format("%-30s%d\n",m.getKey(), m.getValue()));
+
+                }
+
             }
         });
 
@@ -124,16 +132,15 @@ public class ExtractorFrame extends JFrame {
     public void readStopWordFile() {
         try {
             //Filtering the noise words
-            File workingDirectory = new File(System.getProperty("user.dir"));
-            Path stopWordsPath = Paths.get(workingDirectory.getPath() + "//src//EnglishStopWords.txt");
+            File workingDirectory = new File("src/EnglishStopWords.txt");
 
-            Scanner readFile = new Scanner(stopWordsPath);
+
+            Scanner readFile = new Scanner(workingDirectory);
 
             while (readFile.hasNextLine()) {
                 noise.add(readFile.nextLine());
             }
             readFile.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -141,23 +148,46 @@ public class ExtractorFrame extends JFrame {
     }
 
 
-    //reads all the words in the story
+
+
     JFileChooser chooser = new JFileChooser();
     String line = "";
 
-    public void readStoryFile() {
+    //reads all the words in the story and name and filters
+    private void readStoryFile() {
         Path target = new File(System.getProperty("user.dir")).toPath();
         target = target.resolve("src");
         chooser.setCurrentDirectory(target.toFile());
+
+        //readStopWordFile();
         try {
             if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 target = chooser.getSelectedFile().toPath();
 
                 Scanner inFile = new Scanner(target);
                 while (inFile.hasNextLine()) {
-                    line = inFile.nextLine();
+                    //file name print
+                    line = inFile.nextLine().toLowerCase().replaceAll("[^A-Za-z]", " "); //covert to lowercase
                     fileName = chooser.getSelectedFile().getName();
-                    displayWordsTA.setText("File name: " + fileName);
+                    displayWordsTA.setText("File name: " + fileName + "\n\nKeyWords and their frequency:\n");
+
+
+                    //filter
+                    String word[] = line.split(" ");
+                    for (int i = 0; i < word.length; i++) {
+                        String currentWord = word[i];
+
+                        //check if already logged for frequency counting
+                        if (keyWordFreq(currentWord, keyWords)) {
+
+                        } //check if noise words or not
+                        else if (!noiseChecker(currentWord)) {
+                            //Put the keywords into keyWords
+                            gatherKeyWords(currentWord);
+
+                        }
+                    }
+
 
 
                 }
@@ -168,6 +198,39 @@ public class ExtractorFrame extends JFrame {
         } catch (IOException i) {
             System.out.println("IOException Error");
             i.printStackTrace();
+        }
+    }
+
+
+    //Is this a stop word?? noise checker
+    public boolean noiseChecker(String word) {
+        for (String noi : noise) {
+            if (noi.equals(word)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //is keyWord present in keyWords?? frequency
+    public boolean keyWordFreq(String word, TreeMap<String, Integer> keyWords)
+    {
+        for (Map.Entry map : keyWords.entrySet()) {
+            if (map.getKey().equals(word)) {
+                int freq = Integer.parseInt(map.getValue().toString()) + 1;
+                map.setValue(freq);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    //Finally put keywords into the keyWords Officially
+    public void gatherKeyWords(String word) {
+        if (word != null && !"".equals(word)) {
+            keyWords.put(word, 1);
         }
     }
 }

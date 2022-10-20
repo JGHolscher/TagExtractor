@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3c691b60-3fe0-44aa-abdc-1f3ce0a60d08" name="Changes" comment="basics no function">
-      <change afterPath="$PROJECT_DIR$/src/EnglishStopWords.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TheCobblerOfNimes.txt" afterDir="false" />
+    <list default="true" id="3c691b60-3fe0-44aa-abdc-1f3ce0a60d08" name="Changes" comment="working on it...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ExtractorFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ExtractorFrame.java" afterDir="false" />
     </list>
@@ -72,7 +70,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666277011293</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="working on it...">
+      <created>1666287769223</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1666287769223</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -88,6 +93,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="basics no function" />
-    <option name="LAST_COMMIT_MESSAGE" value="basics no function" />
+    <MESSAGE value="working on it..." />
+    <option name="LAST_COMMIT_MESSAGE" value="working on it..." />
   </component>
 </project>
