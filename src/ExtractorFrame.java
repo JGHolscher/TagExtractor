@@ -126,7 +126,7 @@ public class ExtractorFrame extends JFrame {
         saveBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //prompts user for file name so I can save multiple times with each run and tell them apart
+                //prompts user for file name, so I can save multiple times with each run and tell them apart
                 String saveFileName = JOptionPane.showInputDialog("Please enter file name");
 
                 File wd = new File(System.getProperty("user.dir"));
@@ -158,7 +158,6 @@ public class ExtractorFrame extends JFrame {
         try {
             //Filtering the noise words
             File workingDirectory = new File("src/EnglishStopWords.txt");
-
 
             Scanner readFile = new Scanner(workingDirectory);
 
@@ -250,6 +249,9 @@ public class ExtractorFrame extends JFrame {
 
         return false;
     }
+
+
+
 
     //Finally put keywords into the keyWords Officially
     public void gatherKeyWords(String word) {
