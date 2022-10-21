@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3c691b60-3fe0-44aa-abdc-1f3ce0a60d08" name="Changes" comment="words from file print but the filter is not working right now. next steps - working filter and file save">
+    <list default="true" id="3c691b60-3fe0-44aa-abdc-1f3ce0a60d08" name="Changes" comment="all works now need it to save the file, withe the user choosing the name so I can run it alot">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ExtractorFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ExtractorFrame.java" afterDir="false" />
     </list>
@@ -84,7 +84,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666293995954</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="all works now need it to save the file, withe the user choosing the name so I can run it alot">
+      <created>1666317514659</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1666317514659</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -102,6 +109,7 @@
     <MESSAGE value="basics no function" />
     <MESSAGE value="working on it..." />
     <MESSAGE value="words from file print but the filter is not working right now. next steps - working filter and file save" />
-    <option name="LAST_COMMIT_MESSAGE" value="words from file print but the filter is not working right now. next steps - working filter and file save" />
+    <MESSAGE value="all works now need it to save the file, withe the user choosing the name so I can run it alot" />
+    <option name="LAST_COMMIT_MESSAGE" value="all works now need it to save the file, withe the user choosing the name so I can run it alot" />
   </component>
 </project>

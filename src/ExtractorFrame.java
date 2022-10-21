@@ -26,7 +26,7 @@ public class ExtractorFrame extends JFrame {
 
     public ExtractorFrame() //DONE
     {
-        setTitle("KeyWord Extractor");
+        setTitle("Keyword Extractor");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Toolkit kit = Toolkit.getDefaultToolkit();
@@ -52,7 +52,7 @@ public class ExtractorFrame extends JFrame {
 
     private void createTitlePanel() {
         titlePnl = new JPanel();
-        titleLbl = new JLabel("Tag Extractor", JLabel.CENTER);
+        titleLbl = new JLabel("Story Keyword Extractor", JLabel.CENTER);
         titleLbl.setFont(new Font("Comic Sans MS", Font.PLAIN, 48));
         titleLbl.setVerticalTextPosition(JLabel.BOTTOM);
         titleLbl.setHorizontalTextPosition(JLabel.CENTER);
@@ -113,9 +113,9 @@ public class ExtractorFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 readStoryFile();
 
-                for (Map.Entry m : keyWords.entrySet()) {
+                for (Map.Entry map : keyWords.entrySet()) {
 
-                    displayWordsTA.append(String.format("%-30s%d\n",m.getKey(), m.getValue()));
+                    displayWordsTA.append(String.format("%-30s%d\n",map.getKey(), map.getValue()));
 
                 }
 
@@ -123,7 +123,32 @@ public class ExtractorFrame extends JFrame {
         });
 
         //save words to file button
+        saveBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //prompts user for file name so I can save multiple times with each run and tell them apart
+                String saveFileName = JOptionPane.showInputDialog("Please enter file name");
 
+                File wd = new File(System.getProperty("user.dir"));
+                Path file = Paths.get(wd.getPath() + "//src//" + saveFileName + ".txt");
+
+                try {
+                    OutputStream out =
+                            new BufferedOutputStream(Files.newOutputStream(file, CREATE));
+                    BufferedWriter writer =
+                            new BufferedWriter(new OutputStreamWriter(out));
+
+                    for (Map.Entry map : keyWords.entrySet()) {
+                        writer.write(String.format("%-30s%d\n", map.getKey(), map.getValue()));
+                    }
+                    writer.close();
+                    displayWordsTA.append("\nFile Saved To: " + saveFileName + ".txt");
+
+                }catch (IOException i) {
+                    i.printStackTrace();
+                }
+            }
+        });
 
     }
 
@@ -149,12 +174,11 @@ public class ExtractorFrame extends JFrame {
 
 
 
-
-    JFileChooser chooser = new JFileChooser();
-    String line = "";
-
     //reads all the words in the story and name and filters
     private void readStoryFile() {
+        JFileChooser chooser = new JFileChooser();
+        String line = "";
+
         Path target = new File(System.getProperty("user.dir")).toPath();
         target = target.resolve("src");
         chooser.setCurrentDirectory(target.toFile());
@@ -166,10 +190,9 @@ public class ExtractorFrame extends JFrame {
 
                 Scanner inFile = new Scanner(target);
                 while (inFile.hasNextLine()) {
-                    //file name print
-                    line = inFile.nextLine().toLowerCase().replaceAll("[^A-Za-z]", " "); //covert to lowercase
+                    line = inFile.nextLine().toLowerCase().replaceAll("[^A-Za-z]", " "); //covert to lowercase and replace symbols and nums to spaces
                     fileName = chooser.getSelectedFile().getName();
-                    displayWordsTA.setText("File name: " + fileName + "\n\nKeyWords and their frequency:\n");
+                    displayWordsTA.setText("File name: " + fileName + "\n\n\nKeyWords and their frequency:\n\n");
 
 
                     //filter
