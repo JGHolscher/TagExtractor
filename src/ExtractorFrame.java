@@ -159,7 +159,7 @@ public class ExtractorFrame extends JFrame {
         target = target.resolve("src");
         chooser.setCurrentDirectory(target.toFile());
 
-        //readStopWordFile();
+        readStopWordFile();
         try {
             if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 target = chooser.getSelectedFile().toPath();
@@ -217,6 +217,7 @@ public class ExtractorFrame extends JFrame {
     {
         for (Map.Entry map : keyWords.entrySet()) {
             if (map.getKey().equals(word)) {
+               // if (!noise.contains(word)){
                 int freq = Integer.parseInt(map.getValue().toString()) + 1;
                 map.setValue(freq);
 
